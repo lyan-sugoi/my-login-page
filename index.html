@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Love Icon</title>
+  <style>
+    .heart {
+      width: 200px;
+      height: 180px;
+      position: relative;
+      margin-left: 290px; /* dịch sang phải */
+      cursor: pointer;
+    }
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 100px;
+      height: 160px;
+      border-radius: 100px 100px 0 0;
+      background: #e63946;
+    }
+    .heart::before {
+      left: -42px;
+      transform: rotate(-45deg);
+    }
+    .heart::after {
+      left: 0;
+      transform: rotate(45deg);
+    }
+  </style>
+</head>
+<body>
+  <div class="heart"></div>
+  <script>
+    document.querySelector('.heart').addEventListener('click', function() {
+      this.style.transform = 'scale(1.2)';
+      setTimeout(() => { this.style.transform = ''; }, 200);
+    });
+  </script>
+</body>
+</html>
