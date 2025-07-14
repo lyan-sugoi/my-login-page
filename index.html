@@ -2,42 +2,153 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Love Icon</title>
+  <title>Đăng nhập & Đăng ký tài khoản</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    .heart {
-      width: 200px;
-      height: 180px;
-      position: relative;
-      margin-left: 290px; /* dịch sang phải */
+    body {
+      background: linear-gradient(120deg, #a8dadc, #457b9d, #1d3557);
+      min-height: 100vh;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .auth-container {
+      background: #fff;
+      padding: 36px 32px;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px #1d355760;
+      width: 340px;
+      max-width: 95vw;
+      animation: fadeIn 1s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-30px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    .auth-title {
+      text-align: center;
+      color: #1d3557;
+      font-size: 2rem;
+      margin-bottom: 22px;
+      letter-spacing: 1px;
+    }
+    .auth-input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1px solid #457b9d;
+      border-radius: 7px;
+      margin-bottom: 18px;
+      font-size: 1rem;
+      box-sizing: border-box;
+      background: #f1faee;
+      transition: border 0.2s;
+    }
+    .auth-input:focus { border-color: #e63946; outline: none; }
+    .auth-btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(90deg, #e63946, #fca311);
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      font-size: 1.1rem;
+      font-weight: 500;
       cursor: pointer;
+      transition: background 0.2s;
+      margin-bottom: 10px;
     }
-    .heart::before,
-    .heart::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      width: 100px;
-      height: 160px;
-      border-radius: 100px 100px 0 0;
-      background: #e63946;
+    .auth-btn:hover {
+      background: linear-gradient(90deg, #fca311, #e63946);
     }
-    .heart::before {
-      left: -42px;
-      transform: rotate(-45deg);
+    .switch-link {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 1rem;
+      color: #457b9d;
     }
-    .heart::after {
-      left: 0;
-      transform: rotate(45deg);
+    .switch-link a {
+      color: #e63946;
+      text-decoration: underline;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .msg {
+      text-align: center;
+      color: #e63946;
+      margin-bottom: 10px;
+      font-size: 0.98rem;
+      min-height: 22px;
     }
   </style>
 </head>
 <body>
-  <div class="heart"></div>
+  <div class="auth-container" id="login-box">
+    <div class="auth-title">Đăng nhập</div>
+    <div class="msg" id="login-msg"></div>
+    <input class="auth-input" type="text" id="login-username" placeholder="Tên đăng nhập">
+    <input class="auth-input" type="password" id="login-password" placeholder="Mật khẩu">
+    <button class="auth-btn" onclick="login()">Đăng nhập</button>
+    <div class="switch-link">Chưa có tài khoản? <a onclick="showRegister()">Đăng ký ngay</a></div>
+  </div>
+  <div class="auth-container" id="register-box" style="display:none;">
+    <div class="auth-title">Tạo tài khoản</div>
+    <div class="msg" id="register-msg"></div>
+    <input class="auth-input" type="text" id="register-username" placeholder="Tên đăng nhập">
+    <input class="auth-input" type="email" id="register-email" placeholder="Email">
+    <input class="auth-input" type="password" id="register-password" placeholder="Mật khẩu">
+    <button class="auth-btn" onclick="register()">Đăng ký</button>
+    <div class="switch-link">Đã có tài khoản? <a onclick="showLogin()">Quay về đăng nhập</a></div>
+  </div>
   <script>
-    document.querySelector('.heart').addEventListener('click', function() {
-      this.style.transform = 'scale(1.2)';
-      setTimeout(() => { this.style.transform = ''; }, 200);
-    });
+    function showRegister() {
+      document.getElementById('login-box').style.display = 'none';
+      document.getElementById('register-box').style.display = 'block';
+    }
+    function showLogin() {
+      document.getElementById('login-box').style.display = 'block';
+      document.getElementById('register-box').style.display = 'none';
+    }
+
+    // Demo chức năng, không lưu tài khoản thật
+    function login() {
+      let username = document.getElementById('login-username').value.trim();
+      let password = document.getElementById('login-password').value.trim();
+      let msg = document.getElementById('login-msg');
+      if (!username || !password) {
+        msg.innerText = "Vui lòng nhập đủ thông tin!";
+        return;
+      }
+      // Demo: đăng nhập thành công nếu username là "admin" và password là "123"
+      if (username === "admin" && password === "123") {
+        msg.style.color = "#2ecc71";
+        msg.innerText = "Đăng nhập thành công!";
+        setTimeout(() => { msg.innerText = ""; }, 2000);
+      } else {
+        msg.innerText = "Tên đăng nhập hoặc mật khẩu sai!";
+      }
+    }
+    function register() {
+      let username = document.getElementById('register-username').value.trim();
+      let email = document.getElementById('register-email').value.trim();
+      let password = document.getElementById('register-password').value.trim();
+      let msg = document.getElementById('register-msg');
+      if (!username || !email || !password) {
+        msg.innerText = "Vui lòng nhập đủ thông tin!";
+        return;
+      }
+      if (!email.includes("@")) {
+        msg.innerText = "Email không hợp lệ!";
+        return;
+      }
+      msg.style.color = "#2ecc71";
+      msg.innerText = "Đăng ký thành công! Bạn có thể đăng nhập.";
+      setTimeout(() => {
+        showLogin();
+        msg.innerText = "";
+      }, 1800);
+    }
   </script>
 </body>
 </html>
